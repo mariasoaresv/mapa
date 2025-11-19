@@ -24,9 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const geoSearchProvider = new GeoSearch.OpenStreetMapProvider();
     let map;
 
-    // Função auxiliar para adicionar eventos (reutilizada no Load e no Drop)
     function adicionarEventosMarcador(marker) {
-        // Clique ESQUERDO no marcador/icone
         marker.on('click', (e) => {
             L.DomEvent.stopPropagation(e);
             if(menuContexto) menuContexto.classList.add('popup-escondido');
@@ -49,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 .openOn(map);
         });
 
-        // Clique DIREITO no marcador/icone
         marker.on('contextmenu', (e) => { 
             L.DomEvent.preventDefault(e);
             L.DomEvent.stopPropagation(e);
@@ -96,12 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         window.myMap = map; 
 
-        // --- CARREGANDO PONTOS DO BANCO ---
         console.log("Buscando pontos no servidor...");
         fetch('/pontos')
             .then(res => res.json())
             .then(pontos => {
-                console.log(`✅ Servidor retornou ${pontos.length} pontos.`);
+                console.log(`Servidor retornou ${pontos.length} pontos.`);
                 
                 pontos.forEach(p => {
                     if(!p.lat || !p.lng || !p.tipo) {
@@ -119,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     adicionarEventosMarcador(marker);
                 });
             })
-            .catch(err => console.error("❌ Erro ao carregar pontos:", err));
+            .catch(err => console.error("Erro ao carregar pontos:", err));
     }
 
     // Popups de detalhes, manipualação de ícones e marcadores
